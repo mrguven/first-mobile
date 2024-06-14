@@ -4,12 +4,59 @@ import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import React, { useState, useEffect } from 'react';
+import { View, Text, ActivityIndicator } from 'react-native';
+import axios, { AxiosResponse } from 'axios';
 
-export default function HomeScreen() {
+export default function SalahTime() {
 
+    interface Data {
+        userId: number,
+id: number,
+title: string,
+body: string
+      }
+      interface Data1 {
+        userId: number,
+id: number,
+title: string,
+body: string
+      }
+    
+      const [data, setData] = useState<Data | null>(null);
+      const [data1, setData1] = useState<AxiosResponse | null | void>(null);
+      const [loading, setLoading] = useState(true);
+    
+      useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const response = await fetch('https://jsonplaceholder.typicode.com/posts/1');
+            const json = await response.json();
+            setData(json);
+          } catch (error) {
+            console.error(error);
+          } finally {
+            setLoading(false);
+          }
+
+          await axios('https://jsonplaceholder.typicode.com/posts/2')
+          .then(data=>setData1(data))
+          .catch(err=>console.log(err))
+
+        };
+    
+        fetchData();
+      }, []);
+    
+      if (loading) {
+        return <ActivityIndicator />;
+      }
+    
+     
 function onPressLearnMore(){
-  
+
 }
+    
 
   return (
     <ParallaxScrollView
@@ -27,7 +74,7 @@ function onPressLearnMore(){
       <ThemedView style={styles.stepContainer}>
         <ThemedText type="subtitle">Step 1: Try it</ThemedText>
         <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes....
+          Edit <ThemedText type="defaultSemiBold">Namaz Vakitleri</ThemedText> 
           Press{' '}
           <ThemedText type="defaultSemiBold">
             {Platform.select({ ios: 'cmd + d', android: 'cmd + m' })}
@@ -36,9 +83,9 @@ function onPressLearnMore(){
         </ThemedText>
       </ThemedView>
       <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
+        <ThemedText type="subtitle">Time</ThemedText>
         <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
+          Namaz Vakitleri
         </ThemedText>
       </ThemedView>
       <ThemedView style={styles.stepContainer}>
@@ -50,18 +97,22 @@ function onPressLearnMore(){
           <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
           <ThemedText type="defaultSemiBold">app-example</ThemedText>.
           <ThemedText type="defaultSemiBold">Hello world</ThemedText>.
+        
         </ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="subtitle">Step 4: Get a fresh start</ThemedText>
-          <ThemedText type="defaultSemiBold">Hello world</ThemedText>.
-        </ThemedText>
+     
       </ThemedView>
+      <View>
+      {data ? <Text>{data.userId}</Text> : <Text>No data found</Text>}
+      {data ? <Text>{data.title}</Text> : <Text>No data found</Text>}
+      {data ? <Text>{data.body}</Text> : <Text>No data found</Text>}
+    </View>
+
+    
       <Button
   onPress={onPressLearnMore}
-  title="Learn More"
+  title="Sehir"
   color="#841584"
-  accessibilityLabel="Learn more about this purple button"
+  accessibilityLabel="Bir sehir secin"
 />
     </ParallaxScrollView>
   );

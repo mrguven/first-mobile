@@ -32,6 +32,15 @@ export default function TabLayout() {
           ),
         }}
       />
+        <Tabs.Screen
+        name="salahTime"
+        options={{
+          title: 'Namaz Vakitleri',
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon name={focused ? 'home' : 'home-outline'} color={color} />
+          ),
+        }}
+      />
     </Tabs>
   );
 }
